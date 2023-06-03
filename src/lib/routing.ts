@@ -1,3 +1,3 @@
-import { PUBLIC_BASE_URL } from '$env/static/public';
+import { base } from '$app/paths';
 
-export const withBaseUrl = (url: string) => `${PUBLIC_BASE_URL}/${url.replace(/^\//, '')}`;
+export const withBaseUrl = (url: string) => `${base}/${url.replace(/^\//, '')}`;

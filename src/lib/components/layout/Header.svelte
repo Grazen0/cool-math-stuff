@@ -17,7 +17,7 @@
 </script>
 
 <header class="bg-slate-900 p-3 flex flex-row items-center text-lg">
-	<a href="/" class="font-semibold text-3xl px-4">{WEBSITE_NAME}</a>
+	<a href={withBaseUrl('/')} class="font-semibold text-3xl px-4">{WEBSITE_NAME}</a>
 	<nav class="">
 		<ul class="inline-flex flex-row space-x-4 mx-8">
 			{#each links as link}
