@@ -1,3 +1,3 @@
-# CoolMathStuff
+# Cool Math Stuff
 
 yea
