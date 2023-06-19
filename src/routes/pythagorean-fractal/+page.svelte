@@ -78,12 +78,14 @@
 </script>
 
 <PageLayout title="Pythagorean Fractal">
-	<canvas
-		class="bg-gray-900 rounded max-w-full mx-auto"
-		width="900"
-		height="500"
-		bind:this={canvas}
-	/>
+	<div class="my-12">
+		<canvas
+			class="bg-slate-900 rounded max-w-full mx-auto"
+			width="900"
+			height="500"
+			bind:this={canvas}
+		/>
+	</div>
 
 	<div class="max-w-full w-96 sm:w-[26rem] mx-auto text-center text-md sm:text-lg">
 		<div class="text-right my-4 grid grid-cols-4 gap-x-4 gap-y-2 items-center">

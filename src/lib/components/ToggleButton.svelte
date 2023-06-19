@@ -16,7 +16,7 @@
 <button
 	class={classNames(
 		className,
-		'bg-gray-900 rounded-md px-3 py-1 transition-all duration-[25ms] outline m-2 active:bg-gray-800',
+		'bg-slate-900 rounded-md px-3 py-1 transition-all duration-[25ms] outline m-2 active:bg-slate-800',
 		toggled ? 'outline-2' : 'outline-0',
 		large ? 'text-xl py-2 px-4 rounded-lg' : 'px-3 py-1'
 	)}

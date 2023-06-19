@@ -13,6 +13,10 @@
 			path: withBaseUrl('/pythagorean-fractal'),
 			label: 'Pythagorean Fractal',
 		},
+		{
+			path: withBaseUrl('/matrices'),
+			label: 'Matrices',
+		},
 	];
 </script>
 

@@ -219,4 +219,4 @@
 	})();
 </script>
 
-<canvas class="bg-gray-900 rounded max-w-full" width="600" height="400" bind:this={canvas} />
+<canvas class="bg-slate-900 rounded max-w-full" width="600" height="400" bind:this={canvas} />

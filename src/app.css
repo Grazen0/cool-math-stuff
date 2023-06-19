@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.top-left-0 {
+		@apply top-0 left-0;
+	}
+
+	.spin-button-none {
+		@apply [-moz-appearance:textfield] outer-spin-button:appearance-none inner-spin-button:appearance-none outer-spin-button:m-0 inner-spin-button:m-0;
+	}
+}
