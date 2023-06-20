@@ -12,11 +12,11 @@
 	<p>When working in 2 dimensions, a 2x2 matrix means a nice way to pack two coordinates:</p>
 	<p>
 		<Katex
-			math={'A = \\begin{bmatrix} \\color{lime}a & \\color{red}b \\\\ \\color{lime}c & \\color{red}d \\end{bmatrix}'}
+			math={'M = \\begin{bmatrix} \\color{lime}a & \\color{red}b \\\\ \\color{lime}c & \\color{red}d \\end{bmatrix}'}
 		/>
 	</p>
 	<p>
-		When this matrix <Katex math="A" /> is applied as a transformation, the basis vectors <Katex
+		When this matrix <Katex math="M" /> is applied as a transformation, the basis vectors <Katex
 			math={'\\color{lime}\\hat{i}'}
 		/> and <Katex math={'\\color{red}\\hat{j}'} /> are moved to <Katex
 			math={'\\begin{bmatrix} \\color{lime}a \\\\ \\color{lime}c \\end{bmatrix}'}
@@ -25,7 +25,7 @@
 	</p>
 	<p>When matrices are multiplied together, the effects of their transformations are composed.</p>
 	<p>
-		The <strong>determinant</strong> of this matrix (denoted as <Katex math="|A|" />) tells the area
+		The <strong>determinant</strong> of this matrix (denoted as <Katex math="|M|" />) tells the area
 		of a square unit in the resulting transformed space.
 	</p>
 	<br />
