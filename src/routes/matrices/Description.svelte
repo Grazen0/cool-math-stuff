@@ -6,7 +6,8 @@
 	<p>...</p>
 	<br />
 	<p>
-		In linear algebra, a matrix can represent what is called a <strong>linear transformation</strong
+		In linear algebra, a matrix represents what is called a <span
+			class="font-semibold text-cyan-300">linear transformation</span
 		>.
 	</p>
 	<p>When working in 2 dimensions, a 2x2 matrix means a nice way to pack two coordinates:</p>
@@ -25,8 +26,11 @@
 	</p>
 	<p>When matrices are multiplied together, the effects of their transformations are composed.</p>
 	<p>
-		The <strong>determinant</strong> of this matrix (denoted as <Katex math="|M|" />) tells the area
-		of a square unit in the resulting transformed space.
+		The <span class="font-semibold">determinant</span> of this matrix (denoted as <Katex
+			math="|M|"
+		/>) tells the area of a <span class="text-amber-300 font-semibold">square unit</span> in the
+		resulting transformed space. It can also be interpreted as the
+		<span class="font-semibold">scaling factor</span> of the transformation.
 	</p>
 	<br />
 	<p>...</p>

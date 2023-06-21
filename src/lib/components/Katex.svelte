@@ -21,4 +21,6 @@
 	/>
 </svelte:head>
 
-{@html katexString}
+<span {...$$props}>
+	{@html katexString}
+</span>

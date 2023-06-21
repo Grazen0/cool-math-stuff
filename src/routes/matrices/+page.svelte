@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Button from '$lib/components/Button.svelte';
 	import NumberInput from '$lib/components/NumberInput.svelte';
@@ -20,8 +19,6 @@
 	let productMatrix = identityMatrix();
 	let animationTime = 0;
 	let ANIMATION_DURATION = 30;
-
-	onMount(() => {});
 
 	const addMatrix = () => {
 		if ((inputMat as (number | null)[]).includes(null)) {
@@ -74,7 +71,7 @@
 		}
 	};
 
-	$: matricesFull = matrices.length >= 8;
+	$: matricesFull = matrices.length >= 4;
 	$: productMatrix = matrices.reduce(
 		(product, matInfo) => multiplyMatrices(product, matInfo.mat),
 		identityMatrix()
@@ -114,7 +111,7 @@
 							<span class="text-2xl">&middot;</span>
 						{/if}
 						<MatrixItem
-							mat={matInfo.mat}
+							bind:mat={matInfo.mat}
 							disableLeft={i === 0}
 							disableRight={i === matrices.length - 1}
 							on:move={e => handleMove(e.detail.direction, i)}
