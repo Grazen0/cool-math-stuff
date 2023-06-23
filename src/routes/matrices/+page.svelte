@@ -21,7 +21,7 @@
 	});
 
 	let matrices: number[][] = [];
-	let totalProductMatrix = identityMatrix();
+	let productMatrix = identityMatrix();
 	let animationStage = 0;
 
 	const addMatrix = (matrix: number[]) => {
@@ -40,10 +40,10 @@
 		matrices = newMatrices;
 	};
 
-	$: totalProductMatrix = matrices
+	$: productMatrix = matrices
 		.slice(animationStage)
 		.reduce((product, mat) => multiplyMatrices(product, mat), identityMatrix());
-	$: displayMatrix.set(totalProductMatrix);
+	$: displayMatrix.set(productMatrix);
 	$: animationStage = clamp(animationStage, 0, matrices.length);
 </script>
 
@@ -84,7 +84,7 @@
 			</ul>
 			<div class="text-center text-xl">
 				<h2 class="text-2xl my-4">Product and determinant:</h2>
-				<MatrixInfo matrix={totalProductMatrix} />
+				<MatrixInfo matrix={productMatrix} />
 			</div>
 		</div>
 	</div>
