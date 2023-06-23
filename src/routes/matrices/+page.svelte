@@ -64,10 +64,10 @@
 				on:previous={() => animationStage++}
 			/>
 			<ul class="flex flex-wrap items-center space-x-2">
-				{#each matrices as mat, index}
+				{#each matrices as matrix, index}
 					<MatrixItem
 						selected={animationStage === index}
-						bind:mat
+						bind:matrix
 						disableLeft={index === 0}
 						disableRight={index === matrices.length - 1}
 						on:move={e => handleMove(e.detail.direction, index)}

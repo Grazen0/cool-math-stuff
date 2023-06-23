@@ -12,18 +12,18 @@
 
 	export let disableLeft: boolean;
 	export let disableRight: boolean;
-	export let mat: number[];
+	export let matrix: number[];
 	export let selected: boolean;
 
 	const dispatch = createEventDispatcher<MatrixItemEvent>();
 
 	const transpose = () => {
-		mat = [mat[0], mat[2], mat[1], mat[3]];
+		matrix = [matrix[0], matrix[2], matrix[1], matrix[3]];
 	};
 
 	const invert = () => {
-		const det = determinant(mat);
-		mat = [mat[3] / det, -mat[1] / det, -mat[2] / det, mat[0] / det];
+		const det = determinant(matrix);
+		matrix = [matrix[3] / det, -matrix[1] / det, -matrix[2] / det, matrix[0] / det];
 	};
 </script>
 
@@ -55,7 +55,7 @@
 			<MdClose />
 		</SmolButton>
 	</div>
-	<Katex class="block my-3" math={latexMatrix(mat)} />
+	<Katex class="block my-3" math={latexMatrix(matrix)} />
 	<div class="flex justify-center space-x-2">
 		<SmolButton on:click={invert} class="bg-slate-700 w-auto h-auto text-sm p-1">
 			<Katex math={'A^{-1}'} />
