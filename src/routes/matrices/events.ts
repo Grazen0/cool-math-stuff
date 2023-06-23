@@ -4,3 +4,8 @@ export interface MatrixItemEvent {
 	};
 	delete: {};
 }
+
+export interface AnimationControlsEvent {
+	next: {};
+	previous: {};
+}

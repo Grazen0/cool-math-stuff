@@ -11,3 +11,5 @@ export const rotatePoint = (x: number, y: number, angleRadians: number): [number
 	const cos = Math.cos(angleRadians);
 	return [x * cos - y * sin, x * sin + y * cos];
 };
+
+export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(min, num));

@@ -1,45 +1,40 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Button from '$lib/components/Button.svelte';
-	import NumberInput from '$lib/components/NumberInput.svelte';
-	import Katex from '$lib/components/Katex.svelte';
 	import PageLayout from '$lib/components/layout/PageLayout.svelte';
 	import Canvas from './Canvas.svelte';
 	import Description from './Description.svelte';
-	import MatrixDiv from './components/MatrixDiv.svelte';
 	import MatrixItem from './components/MatrixItem.svelte';
-	import { identityMatrix, determinant, multiplyMatrices } from './math';
+	import { identityMatrix, multiplyMatrices } from './math';
+	import AnimationControls from './components/AnimationControls.svelte';
+	import MatrixInfo from './components/MatrixInfo.svelte';
+	import MatrixInput from './components/MatrixInput.svelte';
+	import Katex from '$lib/components/Katex.svelte';
+	import classNames from 'classnames';
+	import { clamp } from '$lib/math';
 
-	let matrices: { id: number; mat: number[] }[] = [];
-	let inputMat: number[] = [1, 0, 0, 1];
+	const ANIMATION_DURATION = 30;
+	const MAX_MATRICES = 4;
+
+	let matrices: number[][] = [];
+	let startMatrix = identityMatrix();
+	let endMatrix = identityMatrix();
+	let currentMatrix = identityMatrix();
+	let totalProductMatrix = identityMatrix();
 	let animating = false;
-	let oldMatrix = identityMatrix();
-	let targetMatrix = identityMatrix();
-	let displayMatrix = identityMatrix();
-	let productMatrix = identityMatrix();
 	let animationTime = 0;
-	let ANIMATION_DURATION = 30;
+	let animationStage = 0;
 
-	const addMatrix = () => {
-		if ((inputMat as (number | null)[]).includes(null)) {
-			alert('Some numbers in the matrix are invalid');
-			return;
-		}
-
-		matrices = [{ id: Date.now(), mat: [...(inputMat as any)] }, ...matrices];
-		inputMat = identityMatrix();
+	const addMatrix = (matrix: number[]) => {
+		matrices = [matrix, ...matrices];
 	};
 
-	const deleteMatrix = (id: number) => {
-		matrices = matrices.filter(matInfo => matInfo.id !== id);
+	const deleteMatrix = (index: number) => {
+		matrices = matrices.filter((_, i) => index !== i);
 	};
 
 	const handleMove = (direction: 'left' | 'right', index: number) => {
 		const swapIndex = direction === 'left' ? index - 1 : index + 1;
-		const newMatrices = matrices.map(matInfo => ({
-			id: matInfo.id,
-			mat: [...matInfo.mat],
-		}));
+		const newMatrices = matrices.map(mat => [...mat]);
 
 		[newMatrices[index], newMatrices[swapIndex]] = [newMatrices[swapIndex], newMatrices[index]];
 		matrices = newMatrices;
@@ -51,7 +46,7 @@
 		if (!browser) return;
 		const progress = animationTime / ANIMATION_DURATION;
 
-		displayMatrix = oldMatrix.map((n, i) => n + (targetMatrix[i] - n) * smoothing(progress));
+		currentMatrix = startMatrix.map((n, i) => n + (endMatrix[i] - n) * smoothing(progress));
 
 		if (animationTime++ >= ANIMATION_DURATION) {
 			animating = false;
@@ -60,9 +55,9 @@
 		}
 	};
 
-	const setTargetMatrix = (newTarget: number[]) => {
-		oldMatrix = displayMatrix;
-		targetMatrix = newTarget;
+	const setEndMatrix = (newEnd: number[]) => {
+		startMatrix = currentMatrix;
+		endMatrix = newEnd;
 		animationTime = 0;
 
 		if (!animating) {
@@ -71,70 +66,51 @@
 		}
 	};
 
-	$: matricesFull = matrices.length >= 4;
-	$: productMatrix = matrices.reduce(
-		(product, matInfo) => multiplyMatrices(product, matInfo.mat),
-		identityMatrix()
-	);
-	$: setTargetMatrix(productMatrix);
+	$: totalProductMatrix = matrices
+		.slice(animationStage)
+		.reduce((product, mat) => multiplyMatrices(product, mat), identityMatrix());
+	$: setEndMatrix(totalProductMatrix);
+	$: animationStage = clamp(animationStage, 0, matrices.length);
 </script>
 
 <PageLayout title="Matrices">
 	<div
 		class="my-16 flex flex-col lg:flex-row justify-evenly items-center lg:items-start space-y-6 lg:space-y-0"
 	>
-		<Canvas mat={displayMatrix} />
+		<Canvas mat={currentMatrix} />
 		<div class="space-y-6 w-[26rem] py-4">
-			<div class="flex flex-row items-center space-x-6 mx-auto w-fit">
-				<MatrixDiv class={matricesFull ? 'brightness-75' : ''}>
-					{#each inputMat as _, index}
-						<NumberInput
-							bind:value={inputMat[index]}
-							disabled={matricesFull}
-							placeholder="0"
-							class="text-center text-xl disabled:brightness-100 spin-button-none"
-						/>
-					{/each}
-				</MatrixDiv>
-				<Button on:click={addMatrix} disabled={matricesFull}>
-					{#if !matricesFull}
-						Add matrix
-					{:else}
-						Full!
-					{/if}
-				</Button>
-			</div>
-			{#if matrices.length > 0}
-				<ul class="flex flex-wrap items-center">
-					{#each matrices as matInfo, i (matInfo.id)}
-						{#if i !== 0}
-							<span class="text-2xl">&middot;</span>
-						{/if}
-						<MatrixItem
-							bind:mat={matInfo.mat}
-							disableLeft={i === 0}
-							disableRight={i === matrices.length - 1}
-							on:move={e => handleMove(e.detail.direction, i)}
-							on:delete={() => deleteMatrix(matInfo.id)}
-						/>
-					{/each}
-				</ul>
-			{:else}
-				<p class="text-slate-600 text-center py-12">(Empty)</p>
-			{/if}
+			<MatrixInput
+				disabled={matrices.length >= MAX_MATRICES}
+				on:submit={e => addMatrix(e.detail.matrix)}
+			/>
+			<AnimationControls
+				allowNext={animationStage > 0}
+				allowPrevious={animationStage < matrices.length}
+				on:next={() => animationStage--}
+				on:previous={() => animationStage++}
+			/>
+			<ul class="flex flex-wrap items-center space-x-2">
+				{#each matrices as mat, index}
+					<MatrixItem
+						selected={animationStage === index}
+						bind:mat
+						disableLeft={index === 0}
+						disableRight={index === matrices.length - 1}
+						on:move={e => handleMove(e.detail.direction, index)}
+						on:delete={() => deleteMatrix(index)}
+					/>
+					<span class="text-2xl">&middot;</span>
+				{/each}
+				<span
+					class={classNames('text-center text-3xl rounded transition-all duration-75')}
+					class:text-yellow-400={animationStage === matrices.length}
+				>
+					<Katex math="I" />
+				</span>
+			</ul>
 			<div class="text-center text-xl">
 				<h2 class="text-2xl my-4">Product and determinant:</h2>
-				<Katex
-					math={`
-				\\begin{aligned}
-				M &= \\begin{bmatrix} 
-				${productMatrix[0]} & ${productMatrix[1]} \\\\ 
-				${productMatrix[2]} & ${productMatrix[3]} 
-				\\end{bmatrix} \\\\ 
-				|M| &= ${determinant(productMatrix)} 
-				\\end{aligned}
-				`}
-				/>
+				<MatrixInfo matrix={totalProductMatrix} />
 			</div>
 		</div>
 	</div>

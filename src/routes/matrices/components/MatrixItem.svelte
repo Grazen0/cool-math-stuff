@@ -7,10 +7,13 @@
 	import SmolButton from './SmolButton.svelte';
 	import type { MatrixItemEvent } from '../events';
 	import { determinant, latexMatrix } from '../math';
+	import classNames from 'classnames';
+	import { fade } from 'svelte/transition';
 
 	export let disableLeft: boolean;
 	export let disableRight: boolean;
 	export let mat: number[];
+	export let selected: boolean;
 
 	const dispatch = createEventDispatcher<MatrixItemEvent>();
 
@@ -24,7 +27,13 @@
 	};
 </script>
 
-<li class="text-xl px-2 py-2 bg-slate-900 rounded m-1">
+<li
+	class={classNames(
+		'text-xl px-2 py-2 bg-slate-900 rounded m-1 outline-yellow-400 outline-2 transition-all',
+		selected && 'outline'
+	)}
+	transition:fade={{ duration: 50, delay: 0 }}
+>
 	<div class="grid grid-cols-3 justify-items-center mb-2">
 		<SmolButton
 			on:click={() => dispatch('move', { direction: 'left' })}
