@@ -52,7 +52,7 @@
 		class="my-16 flex flex-col lg:flex-row justify-evenly items-center lg:items-start space-y-6 lg:space-y-0"
 	>
 		<Canvas mat={$displayMatrix} />
-		<div class="space-y-6 w-[26rem] py-4">
+		<div class="space-y-6 py-4">
 			<MatrixInput
 				disabled={matrices.length >= MAX_MATRICES}
 				on:submit={e => addMatrix(e.detail.matrix)}
