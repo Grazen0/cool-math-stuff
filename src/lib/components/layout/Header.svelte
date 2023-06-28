@@ -17,13 +17,17 @@
 			path: withBaseUrl('/matrices'),
 			label: 'Matrices',
 		},
+		{
+			path: withBaseUrl('/equation-systems'),
+			label: 'Equation Systems',
+		},
 	];
 </script>
 
 <header class="bg-slate-900 p-3 flex flex-row items-center text-lg">
 	<a href={withBaseUrl('/')} class="font-semibold text-3xl px-4">{WEBSITE_NAME}</a>
-	<nav class="">
-		<ul class="inline-flex flex-row space-x-4 mx-8">
+	<nav>
+		<ul class="inline-flex flex-row space-x-4 mx-6">
 			{#each links as link}
 				<li
 					class={classNames(

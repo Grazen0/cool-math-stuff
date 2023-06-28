@@ -6,6 +6,11 @@ export const gcd = (a: number, b: number): number => {
 	return gcd(b, a % b);
 };
 
+export const lcm = (a: number, b: number): number => {
+	const divisor = gcd(a, b);
+	return (a * b) / divisor;
+};
+
 export const rotatePoint = (x: number, y: number, angleRadians: number): [number, number] => {
 	const sin = Math.sin(angleRadians);
 	const cos = Math.cos(angleRadians);

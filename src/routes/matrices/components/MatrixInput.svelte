@@ -28,7 +28,7 @@
 			<NumberInput
 				bind:value={inputMatrix[index]}
 				{disabled}
-				class="text-center text-xl disabled:brightness-100 spin-button-none"
+				class="text-center text-xl disabled:brightness-100"
 			/>
 		{/each}
 	</MatrixDiv>
