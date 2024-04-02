@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.3.2
     version: 2.3.2
   katex:
-    specifier: ^0.16.7
-    version: 0.16.7
+    specifier: ^0.16.10
+    version: 0.16.10
   svelte-icons:
     specifier: ^2.1.0
     version: 2.1.0
@@ -767,8 +767,8 @@ packages:
     hasBin: true
     dev: true
 
-  /katex@0.16.7:
-    resolution: {integrity: sha512-Xk9C6oGKRwJTfqfIbtr0Kes9OSv6IFsuhFGc7tW4urlpMJtuh+7YhzU6YEG9n8gmWKcMAFzkp7nr+r69kV0zrA==}
+  /katex@0.16.10:
+    resolution: {integrity: sha512-ZiqaC04tp2O5utMsl2TEZTXxa6WSC4yo0fv5ML++D3QZv/vx2Mct0mTlRx3O+uUkjfuAgOkzsCmq5MiUEsDDdA==}
     hasBin: true
     dependencies:
       commander: 8.3.0
